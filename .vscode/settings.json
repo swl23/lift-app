@@ -1,5 +1,11 @@
 {
   "editor.formatOnSave": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "editor.rulers": [80]
+  "editor.rulers": [80],
+  "autoSnippet.snippets": [
+    {
+      "pattern": "**/docs/decisions/*.md",
+      "snippet": "Architecture Decision Record (ADR)"
+    }
+  ]
 }
