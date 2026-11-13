@@ -37,6 +37,7 @@ briefly, and offer a draft I can accept or edit.
   easily reversed choices.
 - Devlog (DEVLOG.md): offer an entry when we wrap up a working session, finish a
   phase, or change direction.
+- Later (docs/later.md): when we defer a feature, offer an entry for it.
 - README: when a phase looks done, say so and suggest checking it off.
 - This file: if how I want help changes (e.g. a new phase needs a different
   approach), propose an edit here.

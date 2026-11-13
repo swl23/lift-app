@@ -27,7 +27,7 @@ setting up the data model. See the devlog file for greater detail.
 - [ ] Phase 3: React screens
 - [ ] Phase 4: Database, accounts, backend
 - [ ] Phase 5: Deploy as an installable web app (PWA)
-- [ ] Phase 6: Progress charts
+- [ ] Phase 6: V2 features (see `docs/later.md`)
 
 ## Tech
 
@@ -39,3 +39,4 @@ setting up the data model. See the devlog file for greater detail.
 
 - `docs/decisions/`: records of key decisions and why they were made
 - `DEVLOG.md`: running log of progress
+- `docs/later.md`: ideas for future versions
