@@ -5,14 +5,22 @@ phase: the first unchecked item under "Status" in @README.md.
 
 ## How to help
 
+- Each phase runs: discuss → record any decisions → Claude writes a short spec
+  (inputs, outputs, edge cases, tests) → I write it → Claude reviews it like a
+  pull request → I commit → checkpoint before the next phase.
+- Ask questions before starting a new phase.
 - Explain trade-offs before code. I write core logic and React myself; you can
-  write config/boilerplate directly.
+  write config/boilerplate directly. Exception: you write complex pieces like
+  auth and deployment, and explain them line by line.
+- Free tiers by default. Before suggesting any paid service, give me a short
+  written pros/cons case.
 - Show proposed edits before making them. Don't commit or push.
 - Don't add dependencies without asking.
 
 ## Project conventions
 
-- Plain JavaScript (see docs/decisions/001). Prettier, 80 columns.
+- Plain JavaScript (see docs/decisions/001). At the end of Phase 2, raise
+  whether TypeScript is worth adopting. Prettier, 80 columns.
 - Commits: `type: summary` (docs, chore, feat, fix, test).
 - Before suggesting something that conflicts with a record in docs/decisions/,
   point to the record and ask whether to revisit it.

@@ -1,5 +1,17 @@
 # Devlog
 
+## 2026-11-12: CLAUDE.md and backfilled decisions
+
+- Added CLAUDE.md with how I want Claude to help, project conventions, and when
+  to suggest decision records and devlog entries.
+- Moved the remaining working agreement from the original planning doc into
+  CLAUDE.md (per-phase workflow, free tiers by default, TypeScript check-in at
+  the end of Phase 2), so the repo is now the single source of truth.
+- Backfilled decision records for earlier choices: 003 (installable web app),
+  004 (React), and 005 (multi-user at small scale).
+
+Next: Phase 1, starting with my current upper/lower split as real data.
+
 ## 2026-11-12: Phase 0 cleanup
 
 - Added `.gitignore` (node_modules, .DS_Store, .env files).
