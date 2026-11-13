@@ -18,9 +18,13 @@ Not going to integrate offline sync.
 ## Alternatives considered
 
 - A client-side queue, initiated at workout start, that is the default place
-  where logged sets are sent before writing them to database later.
+  where logged sets are sent before writing them to database later. Rejected for
+  now: more moving parts to build and debug. Also adds headache of managing
+  conflicting writes from two devices using one account.
 
 ## Consequences
 
-- Highly increased risk of data loss.
+- Simpler architecture with a single source of truth (database).
+- Sets logged without a connection will fail to save. Will need to develop error
+  system and an easy way to retry so sets aren't lost.
 - Potential data collisions when multiple devices access one account.
