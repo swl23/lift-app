@@ -1,7 +1,7 @@
 # 7. How the next day is determined
 
 Date: 2026-11-13\
-Status: Proposed
+Status: Accepted
 
 ## Context
 
