@@ -19,9 +19,10 @@ Decided at kickoff:
 - Tests: Node's built-in `node:test`, no dependencies (`npm test`). Revisit
   Vitest when React arrives in Phase 3.
 - Node 24 (pin `engines` in package.json).
-- Workflow: Claude writes each spec in `docs/specs/<name>.md` plus its test
-  file; I write the code until the tests pass; Claude reviews.
-- Code in `src/core/`, tests next to it as `*.test.js`.
+- Workflow: Claude writes each test file, opening with a short spec comment;
+  I write the code until the tests pass; Claude reviews.
+- Code in `src/core/`, one module per topic, tests next to it as `*.test.js`
+  (colocation). Feature folders get revisited at Phase 3 kickoff.
 - Function inputs use the table column names (`next_day_id`, `position`) so
   Phase 4 database rows drop in unchanged.
 
@@ -37,16 +38,9 @@ Order:
 
 ## Next step
 
-Claude writes the setup, `docs/specs/next-day.md` and
-`src/core/nextDay.test.js`, and shows them before committing. Sketch:
-
-- `getSuggestedDay(program, days)`: the day matching `next_day_id`; falls back
-  to the lowest position if empty or deleted (010); `null` if no days.
-- `getNextDayId(program, days, workout)`: after a submitted `program` workout,
-  the day after the one run, wrapping (req 14); other kinds leave it unchanged
-  (req 20).
-- Edge cases: position gaps, unordered days, one-day program, the day that was
-  run has been deleted.
+Setup is done and `src/core/nextDay.test.js` (spec comment at the top) is
+written. I write `src/core/nextDay.js` (`getSuggestedDay`, `getNextDayId`)
+until `npm test` passes, then Claude reviews.
 
 ## Where things are
 
