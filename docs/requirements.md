@@ -1,9 +1,9 @@
 # Requirements (v1)
 
-Status: Draft, Phase 1. Describes what v1 must do, not how it's built. The data
-model comes next and must satisfy everything here.
+Status: Phase 1, complete. Describes what v1 must do, not how it's built. The
+data model (`data-model.md`) satisfies everything here.
 
-Related records: 002, 003, 005, 006, 007, 008, 009, 010.
+Related records: 002, 003, 005, 006, 007, 008, 009, 010, 011.
 
 ## Concepts
 
