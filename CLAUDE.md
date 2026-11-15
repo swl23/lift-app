@@ -6,8 +6,9 @@ phase: the first unchecked item under "Status" in @README.md.
 ## How to help
 
 - Each phase runs: discuss → record any decisions → Claude writes a short spec
-  (inputs, outputs, edge cases, tests) → I write it → Claude reviews it like a
-  pull request → I commit → checkpoint before the next phase.
+  (inputs, outputs, edge cases) and the test file → I write code until the tests
+  pass → Claude reviews it like a pull request → I commit → checkpoint before
+  the next phase.
 - Ask questions before starting a new phase. Use cases are a good way to resolve
   questions.
 - Explain trade-offs before code. I write core logic and React myself; you can
@@ -19,11 +20,16 @@ phase: the first unchecked item under "Status" in @README.md.
   When I do: small doc changes go straight to main; anything else goes on a new
   branch with a PR.
 - Don't add dependencies without asking.
+- Database design: I have little relational database experience. Research best
+  practices and make the database calls yourself. Ask me only questions that
+  change the user experience, framed as a use case and its effect on usability,
+  not column or relationship details.
 
 ## Project conventions
 
 - Plain JavaScript (see docs/decisions/001). At the end of Phase 2, raise
   whether TypeScript is worth adopting. Prettier, 80 columns.
+- Tests: `node:test` via `npm test`. Specs live in `docs/specs/`.
 - Commits: `type: summary` (refer to commit types articulated here:
   https://www.conventionalcommits.org/en/v1.0.0/).
 - Periodically review decision records and requirements doc to check if there
