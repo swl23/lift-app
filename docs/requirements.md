@@ -3,7 +3,7 @@
 Status: Draft, Phase 1. Describes what v1 must do, not how it's built. The data
 model comes next and must satisfy everything here.
 
-Related records: 002, 003, 005, 006, 007, 008, 009.
+Related records: 002, 003, 005, 006, 007, 008, 009, 010.
 
 ## Concepts
 
@@ -62,8 +62,11 @@ Related records: 002, 003, 005, 006, 007, 008, 009.
    program share one track (see 006). When a new track is created for an
    exercise that's already on another track, the new one is pre-filled from the
    track most recently moved by a submitted workout: its target, rep range and
-   increment. The user can change these before saving the program. An exercise
-   with no track yet starts with empty values and the 5 lb default increment.
+   increment. If no track exists for the exercise (it's new, or its programs
+   were deleted) but it has logged sets, the new track is pre-filled with the
+   weight and reps of its most recent set in a submitted workout. An exercise
+   with neither starts with empty values. Either way the increment defaults to
+   5 lb, and the user can change everything before saving the program.
 9. Each track has a progression rule. v1 has two:
    - **Double progression:** reps exercises with a rep range only. Every set
      uses the same weight and rep target, starting at the bottom of the range.
@@ -77,7 +80,10 @@ Related records: 002, 003, 005, 006, 007, 008, 009.
 
 ## Programs
 
-10. A user can have several programs saved.
+10. A user can have several programs saved, and can edit or delete any of
+    them, including their days and slots. Deleting never removes logged sets:
+    past workouts keep their exercises and sets, but lose their link to the
+    deleted program, day or slot (010).
 11. Exactly one program is the user's active program. The app opens to it. The
     user can change which program is active at any time.
 12. Each program remembers which of its days is next. Switching away and back
@@ -106,8 +112,8 @@ Related records: 002, 003, 005, 006, 007, 008, 009.
     - **Discard:** delete the workout and all its logs. The next day doesn't
       change, so the same day is suggested again.
 18. If a workout is open and the user picks a different day, changes the active
-    program, or starts an off-program workout, the app first asks the user to
-    finish or discard the open workout.
+    program, starts an off-program workout, or edits a program, the app first
+    asks the user to finish or discard the open workout.
 
 ## Off-program logging
 
