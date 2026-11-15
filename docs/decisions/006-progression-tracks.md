@@ -1,7 +1,6 @@
 # 6. Progression state lives in tracks
 
 Date: 2026-11-12\
-Status: Accepted
 
 ## Context
 
@@ -45,7 +44,3 @@ decides which slots share one:
   applies.
 - Building a program needs a way to link slots to an existing track. That's a
   Phase 3 screen question.
-- Still open:
-  - When a new program uses an exercise, does its track start fresh or carry
-    over the user's last numbers?
-  - Can a one-off lift ever affect a track?

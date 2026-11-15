@@ -3,9 +3,7 @@
 Status: Draft, Phase 1. Describes what v1 must do, not how it's built. The data
 model comes next and must satisfy everything here.
 
-Related records: 002 (no offline sync), 003 (installable web app), 005
-(multi-user at small scale), 006 (progression tracks), 007 (how the next day is
-determined), 008 (freeform workouts and unfinished workouts).
+Related records: 002, 003, 005, 006, 007, 008, 009.
 
 ## Concepts
 
@@ -61,13 +59,19 @@ determined), 008 (freeform workouts and unfinished workouts).
    - Time: a target duration per set, or open-ended (go until failure).
    - Done: no target beyond the set count.
 8. Each slot gets its own track by default. The user can make slots in the same
-   program share one track (see 006).
+   program share one track (see 006). When a new track is created for an
+   exercise that's already on another track, the new one is pre-filled from the
+   track most recently moved by a submitted workout: its target, rep range and
+   increment. The user can change these before saving the program. An exercise
+   with no track yet starts with empty values and the 5 lb default increment.
 9. Each track has a progression rule. v1 has two:
    - **Double progression:** reps exercises with a rep range only. Every set
      uses the same weight and rep target, starting at the bottom of the range.
      Hitting the target on all sets adds 1 rep per set next time. Hitting the
-     top of the range on all sets adds weight next time and drops back to the
-     bottom of the range.
+     top of the range on all sets adds the track's weight increment next time
+     and drops back to the bottom of the range. Each track has its own
+     increment, set when the user adds the exercise to a program. It defaults to
+     5 lb.
    - **None:** the target changes only when the user edits it. Used for AMRAP,
      all timed exercises, and all done exercises in v1.
 
@@ -128,14 +132,29 @@ determined), 008 (freeform workouts and unfinished workouts).
     confirmed set is saved right away and shows a small saved mark. If a save
     fails, the app shows an error and lets the user retry (002). Values entered
     but not confirmed aren't saved and are lost if the page reloads.
-23. A track moves only when every planned set of that exercise hit its target.
-    Otherwise the target stays the same next time.
-24. When the user finishes an exercise on a track with double progression, the
-    app shows the next programmed target (for example, 3×8 @ 50 lb in a 6–8
-    range → 3×6 @ 55 lb) and asks the user to confirm it.
-25. A confirmed target is saved to the track only when the workout is submitted.
-    Discarded workouts never change a track.
-26. Only workouts run from the active program move tracks.
+23. When the last planned set of an exercise in a program workout is logged, the
+    app shows a confirm screen with next time's target. If every set hit its
+    target, the suggestion follows the track's rule. Otherwise it's the same
+    target again. A short message says which ("Nice, you did all your sets.
+    Confirm progression for next time." or "You didn't complete all your sets.
+    Try this again next time."), and any values that changed are briefly
+    highlighted. Timed and done exercises have no confirm screen in v1.
+24. The confirm screen has a weight row and a reps row, each with − and +
+    buttons, and an OK button. The user can change either value before tapping
+    OK (see 009):
+    - Weight changes in 2.5 lb steps. − stops at 2.5 lb. On a bodyweight lift
+      the row shows "Bodyweight," + adds weight, and − below 2.5 lb returns to
+      Bodyweight. There's no upper limit.
+    - Reps change by 1, from 1 to 200, regardless of the rep range.
+    - AMRAP lifts show only the weight row.
+    - The set count isn't on this screen. It's changed in the program editor.
+25. Tapping OK saves the values with the open workout. They're written to the
+    track only when the workout is submitted. Discarding a workout never changes
+    a track.
+26. An exercise with all its sets logged can't stay unconfirmed. If the user
+    leaves before tapping OK, the screen comes back on Resume, and Finish
+    workout shows it before submitting.
+27. Only workouts run from the active program move tracks.
 
 ## Checked against the example split
 
@@ -149,17 +168,6 @@ Every lift in `current-program.md` fits these requirements:
   both upper days.
 
 The example split has no timed or done exercises yet.
-
-## Open questions
-
-- How much weight double progression adds, and whether it's set per track.
-- When a new program uses an exercise, does its track start fresh or carry over
-  the last numbers? (from 006)
-- At the confirm step (24), can the user edit the suggested target, or only
-  accept or skip it?
-- Where do confirmed targets (24) wait until the workout is submitted: stored on
-  the open workout, or recomputed from its logged sets at submit? (for the data
-  model)
 
 ## Later
 
