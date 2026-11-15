@@ -18,11 +18,11 @@ system design, React, and building a real multi-user app end to end.
 
 ## Status
 
-Still in the early planning stages of laying out project requirements and
-setting up the data model.
+Requirements and data model are done. Next up: core logic as plain JavaScript
+functions with tests.
 
 - [x] Phase 0: Repo setup
-- [ ] Phase 1: Requirements and data model
+- [x] Phase 1: Requirements and data model
 - [ ] Phase 2: Core logic (plain JS functions with tests)
 - [ ] Phase 3: React screens
 - [ ] Phase 4: Database, accounts, backend
@@ -37,5 +37,7 @@ setting up the data model.
 
 ## Project notes
 
+- `docs/requirements.md`: what v1 must do
+- `docs/data-model.md`: the tables, and which rules the database enforces
 - `docs/decisions/`: records of key decisions and why they were made
 - `docs/later.md`: ideas for future versions

@@ -8,25 +8,31 @@ changes status.
 
 ## Phase
 
-Phase 1: Requirements and data model.
+Phase 2: Core logic (plain JS functions with tests). Not started.
 
-- Requirements: drafted, no open questions (`docs/requirements.md`).
-- Data model: reviewed as an interactive ERD (nine tables) in chat. Not yet
-  written to the repo.
+Phase 1 is done: requirements (`docs/requirements.md`) and data model
+(`docs/data-model.md`, `docs/schema.sql`) agree, and `docs/schema-tests.sql`
+passes 44 use-case checks on PostgreSQL 16.
 
 ## Next step
 
-Write `docs/data-model.md` from the ERD, including the decisions made during
-review (`confirmed_at` on `workout_exercises`, real deletes per 010). Then
-check that requirements and the data model agree, and close out Phase 1.
+Start Phase 2 with questions (per CLAUDE.md), then Claude writes the first spec.
+Candidate first functions: next-day logic (007, 010 fallback) and the
+progression suggestion for the confirm screen (006, 009).
 
 ## Where things are
 
 - `docs/requirements.md`: what v1 must do (27 numbered requirements).
-- `docs/decisions/`: records 001–010. Latest: 010, deleting plan rows.
+- `docs/data-model.md`: the nine tables, which rules the database enforces and
+  which the app must (the app list becomes Phase 2 tests).
+- `docs/schema.sql`, `docs/schema-tests.sql`: exact Postgres schema and its
+  use-case tests. Needs PostgreSQL 15+.
+- `docs/decisions/`: records 001–011. Latest: 011, the database enforces
+  cross-table rules.
 - `docs/later.md`: deferred features (offline sync, tags, timed progression,
-  progress charts, TypeScript).
+  progress charts, TypeScript, hiding exercises).
 - `examples/current-program.md`: my 4-day split, used as example data only.
+- The "Lift App Data Model" artifact is the interactive ERD.
 
 ## Open items
 

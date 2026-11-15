@@ -35,3 +35,10 @@ much of a user's program is "upper" exercises versus "lower" exercises).
 
 Convert the app from plain JavaScript to TypeScript as a learning opportunity
 and to potentially catch bugs earlier.
+
+## Hiding exercises
+
+An exercise with logged sets can't be deleted, so its history keeps its name.
+Over time the exercise list could fill with movements no longer used. A "hide"
+option would keep the history but drop the exercise from pickers. It would also
+free its name for reuse.
