@@ -41,5 +41,9 @@ briefly, and offer a draft I can accept or edit.
   easily reversed choices.
 - Later (docs/later.md): when we defer a feature, offer an entry for it.
 - README: when a phase looks done, say so and suggest checking it off.
+- STATUS.md: read it at the start of each chat instead of the whole repo. Keep
+  it current without asking: whenever you make a commit that changes the phase,
+  next step, latest decision record or open items, update STATUS.md in the same
+  commit.
 - This file: if how I want help changes (e.g. a new phase needs a different
   approach), propose an edit here.
