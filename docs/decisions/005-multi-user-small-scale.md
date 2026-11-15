@@ -1,7 +1,6 @@
 # 5. Multiple users with accounts, at small scale
 
 Date: 2026-11-12\
-Status: Accepted
 
 ## Context
 

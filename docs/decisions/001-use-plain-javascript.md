@@ -1,7 +1,6 @@
 # 1. Use plain JavaScript
 
 Date: 2026-11-12\
-Status: Accepted
 
 ## Context
 

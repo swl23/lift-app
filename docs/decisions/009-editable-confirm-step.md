@@ -1,7 +1,6 @@
 # 9. Editable confirm step
 
 Date: 2026-11-15\
-Status: Proposed
 
 ## Context
 
@@ -20,8 +19,8 @@ program afterward, which I'd probably forget to do.
   says which, and changed values are briefly highlighted.
 - The screen has a weight row and a reps row, each with − and + buttons, and an
   OK button. Weight moves in 2.5 lb steps (stopping at 2.5 lb, or switching to
-  Bodyweight for bodyweight lifts), and reps move by 1 from 1 to 200. Neither
-  is limited to the rep range.
+  Bodyweight for bodyweight lifts), and reps move by 1 from 1 to 200. Neither is
+  limited to the rep range.
 - AMRAP lifts show only the weight row. Timed and done exercises have no confirm
   screen in v1. The set count isn't on this screen; it belongs in the program
   editor.
@@ -55,5 +54,5 @@ program afterward, which I'd probably forget to do.
   suggestion follows that rule, but what I confirm is what's saved.
 - Finish workout gains a step: any exercise that's fully logged but unconfirmed
   shows its confirm screen first.
-- The suggestion adds each track's own weight increment (default 5 lb), so
-  the − and + buttons and the rule's increment are separate settings.
+- The suggestion adds each track's own weight increment (default 5 lb), so the −
+  and + buttons and the rule's increment are separate settings.

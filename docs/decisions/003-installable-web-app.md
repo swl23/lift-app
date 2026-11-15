@@ -1,7 +1,6 @@
 # 3. Installable web app (PWA), not a native app
 
 Date: 2026-11-12\
-Status: Accepted
 
 ## Context
 

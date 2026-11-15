@@ -1,7 +1,6 @@
 # 4. Use React for the UI
 
 Date: 2026-11-12\
-Status: Accepted
 
 ## Context
 

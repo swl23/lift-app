@@ -1,7 +1,6 @@
 # 2. No Offline Sync.
 
 Date: 2026-11-12\
-Status: Accepted (medium confidence)
 
 ## Context
 
