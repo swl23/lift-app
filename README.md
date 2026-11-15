@@ -19,7 +19,7 @@ system design, React, and building a real multi-user app end to end.
 ## Status
 
 Still in the early planning stages of laying out project requirements and
-setting up the data model. See the devlog file for greater detail.
+setting up the data model.
 
 - [x] Phase 0: Repo setup
 - [ ] Phase 1: Requirements and data model
@@ -38,5 +38,4 @@ setting up the data model. See the devlog file for greater detail.
 ## Project notes
 
 - `docs/decisions/`: records of key decisions and why they were made
-- `DEVLOG.md`: running log of progress
 - `docs/later.md`: ideas for future versions
