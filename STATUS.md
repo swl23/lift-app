@@ -12,7 +12,7 @@ Phase 2: Core logic (plain JS functions with tests). Started 2026-11-15.
 
 Phase 1 is done: requirements (`docs/requirements.md`) and data model
 (`docs/data-model.md`, `docs/schema.sql`) agree, and `docs/schema-tests.sql`
-passes 46 use-case checks on PostgreSQL 16.
+passes 48 use-case checks on PostgreSQL 16.
 
 Decided at kickoff:
 
@@ -38,10 +38,11 @@ Order:
 
 ## Next step
 
-Progression suggestion is done: `src/core/progression.js`
-(`suggestNextTarget`) passes `npm test`, including the new `single` rule
-(006 amendment). Next, kick off the confirm-screen rules (req 24–26):
-discuss, then Claude writes the test file.
+Confirm-screen rules (req 24–26) are discussed and specced: 009 amended to add
+typed values and a per-exercise lowest weight, and Claude wrote
+`src/core/confirmScreen.test.js`. Next, I write `src/core/confirmScreen.js`
+(`stepWeight`, `stepReps`, `parseWeight`, `parseReps`, `exercisesToConfirm`)
+until `npm test` passes, then Claude reviews.
 
 ## Where things are
 
@@ -53,7 +54,8 @@ discuss, then Claude writes the test file.
   Homebrew `postgresql@16`, keg-only, so binaries are in
   `/opt/homebrew/opt/postgresql@16/bin`.
 - `docs/decisions/`: records 001–011. Latest: 011, the database enforces
-  cross-table rules. 006 amended 2026-11-17 to add single progression.
+  cross-table rules. 006 amended 2026-11-17 to add single progression; 009
+  amended 2026-11-17 to add typed values and lowest weight.
 - `docs/later.md`: deferred features (offline sync, tags, timed progression,
   progress charts, TypeScript, hiding exercises).
 - `examples/current-program.md`: my 4-day split, used as example data only.

@@ -64,13 +64,21 @@ insert into users values (:me, 'me@example.com'),
                          (:friend, 'friend@example.com');
 
 -- ================================================== Build your split
-insert into exercises (id, user_id, name, measurement_type) values
-  (:press, :me, 'Chest press', 'reps'),
-  (:lat, :me, 'Lateral raise machine', 'reps'),
-  (:dips, :me, 'Dips', 'reps'),
-  (:plank, :me, 'Plank', 'reps'), -- created with the wrong type on purpose
-  (:fpress, :friend, 'Chest press', 'reps');
+insert into exercises (id, user_id, name, measurement_type,
+                       lowest_weight_lb) values
+  (:press, :me, 'Chest press', 'reps', 10),
+  (:lat, :me, 'Lateral raise machine', 'reps', 10),
+  (:dips, :me, 'Dips', 'reps', null), -- lowest weight is Bodyweight
+  (:plank, :me, 'Plank', 'reps', null), -- wrong type on purpose
+  (:fpress, :friend, 'Chest press', 'reps', 45);
 select must_equal('ok', 'ok', 'two users can each have "Chest press"');
+
+select must_fail(format($$insert into exercises (user_id, name,
+  measurement_type, lowest_weight_lb) values (%L, 'Wall sit', 'time', 10)$$,
+  :me), 'timed exercise with a lowest weight');
+select must_fail(format($$insert into exercises (user_id, name,
+  measurement_type, lowest_weight_lb) values (%L, 'Curl', 'reps', 0)$$, :me),
+  'lowest weight of 0 lb');
 
 select must_fail(format($$insert into exercises (user_id, name,
   measurement_type) values (%L, ' chest PRESS', 'reps')$$, :me),
@@ -218,8 +226,8 @@ select must_fail(format($$delete from exercises where id = %L$$, :press),
 -- Confirm screen: OK with 7 @ 110, then submit.
 update workout_exercises set next_reps = 7, next_weight_lb = 110,
   confirmed_at = now() where id = :we1;
-select must_fail(format($$update workout_exercises set next_weight_lb = 1
-  where id = %L$$, :we1), 'confirmed weight below 2.5 lb');
+select must_fail(format($$update workout_exercises set next_weight_lb = 0
+  where id = %L$$, :we1), 'confirmed weight of 0 lb (empty is bodyweight)');
 update workouts set status = 'submitted', submitted_at = now()
   where id = :w1;
 select must_fail(format($$update workouts set status = 'open'

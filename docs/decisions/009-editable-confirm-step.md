@@ -56,3 +56,25 @@ program afterward, which I'd probably forget to do.
   shows its confirm screen first.
 - The suggestion adds each track's own weight increment (default 5 lb), so the −
   and + buttons and the rule's increment are separate settings.
+
+## Amendment: typed values and lowest weight (2026-11-17)
+
+- **Typing:** tapping the weight or reps value lets me type one. The − and +
+  buttons stay for small changes; typing covers big jumps and odd machine
+  weights. This revisits the "free text entry" alternative above: it was
+  rejected as the only input, not as an addition to the buttons.
+- **Steps:** − and + move exactly 2.5 lb (or 1 rep) from the current value, even
+  an odd weight like 46.25 lb. Typing is the way back to a round number.
+- **Lowest weight:** each reps exercise has a lowest weight, chosen when it's
+  created: Bodyweight, or a weight such as the bar (45 lb). Targets can't go
+  below it, so a barbell lift can never be stepped down to Bodyweight or below
+  the bar. Only exercises whose lowest weight is Bodyweight can show Bodyweight.
+- **Logged sets ignore the floor.** The log records what was actually done
+  (006), even with a lighter bar.
+- **Alternatives considered:** a fixed 2.5 lb floor plus a separate "can be
+  bodyweight" flag (two settings for one idea); a default when the field is left
+  blank (any default is wrong for some exercises: 2.5 lb strands a pull-up,
+  Bodyweight lets a cable row show "Bodyweight").
+- **Consequences:** creating a reps exercise takes one more choice, including
+  mid-workout. Raising an exercise's lowest weight doesn't rewrite existing
+  targets; the floor applies to the next change.
