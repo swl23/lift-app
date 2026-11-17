@@ -110,11 +110,18 @@ insert into tracks (id, user_id, program_id, exercise_id, measurement_type,
   (:tdips, :me, :ul, :dips, 'reps', 'none', null, null, null, null),
   (:tplank, :me, :ul, :plank, 'reps', 'none', null, null, null, null),
   (:tsum, :me, :summer, :press, 'reps', 'double', 8, 10, 8, 100),
-  (:ftrack, :friend, :fprog, :fpress, 'reps', 'double', 5, 5, 5, 135);
+  (:ftrack, :friend, :fprog, :fpress, 'reps', 'single', null, null, 5, 135);
 
 select must_fail(format($$insert into tracks (user_id, program_id,
   exercise_id, measurement_type, rule) values (%L, %L, %L, 'reps',
   'double')$$, :me, :ul, :press), 'double progression without a rep range');
+select must_fail(format($$insert into tracks (user_id, program_id,
+  exercise_id, measurement_type, rule) values (%L, %L, %L, 'reps',
+  'single')$$, :me, :ul, :press), 'single progression without a target');
+select must_fail(format($$insert into tracks (user_id, program_id,
+  exercise_id, measurement_type, rule, rep_min, rep_max, target_reps)
+  values (%L, %L, %L, 'reps', 'single', 5, 8, 5)$$, :me, :ul, :press),
+  'single progression with a rep range');
 select must_fail(format($$insert into tracks (user_id, program_id,
   exercise_id, measurement_type, rule) values (%L, %L, %L, 'time',
   'none')$$, :me, :ul, :press), 'track type differs from its exercise');

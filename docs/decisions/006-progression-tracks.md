@@ -44,3 +44,17 @@ decides which slots share one:
   applies.
 - Building a program needs a way to link slots to an existing track. That's a
   Phase 3 screen question.
+
+## Amendment: single progression (2026-11-17)
+
+Tracks get a third rule, `single`, beside `double` and `none` (req 9). Single
+keeps a fixed rep target and adds the track's increment when every set hits.
+
+- **Alternative considered:** treat single as `double` with `rep_min` equal to
+  `rep_max`. The double logic already gives the same result, but the rule would
+  only exist as a data convention: nothing names it, and a stray range would
+  quietly turn it back into double. A named rule keeps the intent explicit and
+  lets the database check its columns.
+- **Consequences:** single tracks need a rep target and must have no range,
+  enforced by the database. The suggestion code handles each rule by name, so an
+  unknown rule falls back to "same target again" instead of double.

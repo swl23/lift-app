@@ -72,12 +72,12 @@ The current target for one progression, and the rule that moves it (006).
 | `program_id`         | A track belongs to one program                            |
 | `exercise_id`        |                                                           |
 | `measurement_type`   | Copy of the exercise's type, kept in sync by the database |
-| `rule`               | `double` or `none`                                        |
-| `rep_min`, `rep_max` | Required for `double`                                     |
-| `target_reps`        | Required for `double`. Empty = AMRAP                      |
+| `rule`               | `single`, `double` or `none`                              |
+| `rep_min`, `rep_max` | Required for `double`. Empty for `single`                 |
+| `target_reps`        | Required for `single`, `double`. Empty = AMRAP            |
 | `weight_lb`          | Reps tracks only. Empty = bodyweight                      |
 | `target_seconds`     | Timed tracks only. Empty = open-ended                     |
-| `increment_lb`       | Double progression step, default 5                        |
+| `increment_lb`       | Single and double progression step, default 5             |
 
 The type copy lets the database check each column against the type: a timed
 track must have empty reps and weight, so an empty `weight_lb` always means
@@ -163,6 +163,7 @@ Each type has exactly its own columns filled: a reps set has `reps` and no
   its tracks follow the change.
 - Columns that don't fit the measurement type, on tracks and sets.
 - Double progression without a rep range and target.
+- Single progression without a target, or with a rep range.
 - A freeform workout with a day; a submitted time on an open workout.
 - Deleting an exercise that has logs or is on a program.
 - Deleting a track a slot still uses.

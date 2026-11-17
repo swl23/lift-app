@@ -67,7 +67,10 @@ Related records: 002, 003, 005, 006, 007, 008, 009, 010, 011.
    weight and reps of its most recent set in a submitted workout. An exercise
    with neither starts with empty values. Either way the increment defaults to
    5 lb, and the user can change everything before saving the program.
-9. Each track has a progression rule. v1 has two:
+9. Each track has a progression rule. v1 has three:
+   - **Single progression:** reps exercises with a fixed rep target and no
+     range. Hitting the target on all sets adds the track's weight increment
+     next time; the rep target stays the same.
    - **Double progression:** reps exercises with a rep range only. Every set
      uses the same weight and rep target, starting at the bottom of the range.
      Hitting the target on all sets adds 1 rep per set next time. Hitting the

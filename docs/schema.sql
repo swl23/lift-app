@@ -64,7 +64,7 @@ create table tracks (
   program_id       uuid not null,
   exercise_id      uuid not null,
   measurement_type text not null,
-  rule             text not null check (rule in ('double', 'none')),
+  rule             text not null check (rule in ('single', 'double', 'none')),
   rep_min          integer check (rep_min >= 1),
   rep_max          integer,
   target_reps      integer check (target_reps between 1 and 200),
@@ -80,8 +80,9 @@ create table tracks (
     references exercises (id, measurement_type) on update cascade
     deferrable initially deferred,
   check (rep_max >= rep_min),
-  check (rule = 'none' or (rep_min is not null and rep_max is not null
-                           and target_reps is not null)),
+  check (rule = 'none' or target_reps is not null),
+  check (rule <> 'double' or (rep_min is not null and rep_max is not null)),
+  check (rule <> 'single' or (rep_min is null and rep_max is null)),
   check (case measurement_type
     when 'reps' then target_seconds is null
     when 'time' then rule = 'none' and rep_min is null and rep_max is null
