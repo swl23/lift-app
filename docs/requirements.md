@@ -144,7 +144,9 @@ Related records: 002, 003, 005, 006, 007, 008, 009, 010, 011.
     target again. A short message says which ("Nice, you did all your sets.
     Confirm progression for next time." or "You didn't complete all your sets.
     Try this again next time."), and any values that changed are briefly
-    highlighted. Timed and done exercises have no confirm screen in v1.
+    highlighted. Timed and done exercises have no confirm screen in v1. A set
+    hits its target when its reps and weight are at least the target; an empty
+    target (AMRAP or bodyweight) accepts any value.
 24. The confirm screen has a weight row and a reps row, each with − and +
     buttons, and an OK button. The user can change either value before tapping
     OK (see 009):
