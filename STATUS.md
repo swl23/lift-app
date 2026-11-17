@@ -1,6 +1,6 @@
 # Status
 
-Last updated: 2026-11-15
+Last updated: 2026-11-16
 
 A short snapshot of where the project stands, so a new chat can pick up without
 rereading the whole repo. Claude updates this file as part of any commit that
@@ -29,7 +29,7 @@ Decided at kickoff:
 Order:
 
 1. Setup (Claude): package.json, `src/core/`
-2. Next-day logic (007, 010)
+2. Next-day logic (007, 010): done
 3. Progression suggestion (006, 009)
 4. Confirm-screen rules (req 24–26)
 5. Workout lifecycle: start, resume, finish, discard, submit
@@ -38,9 +38,9 @@ Order:
 
 ## Next step
 
-Setup is done and `src/core/nextDay.test.js` (spec comment at the top) is
-written. I write `src/core/nextDay.js` (`getSuggestedDay`, `getNextDayId`)
-until `npm test` passes, then Claude reviews.
+Next-day logic is done: `src/core/nextDay.js` (`getSuggestedDay`,
+`getNextDayId`) passes `npm test`. Next, kick off the progression suggestion
+(006, 009): discuss, then Claude writes `src/core/progression.test.js`.
 
 ## Where things are
 
