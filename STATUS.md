@@ -12,7 +12,7 @@ Phase 2: Core logic (plain JS functions with tests). Started 2026-11-15.
 
 Phase 1 is done: requirements (`docs/requirements.md`) and data model
 (`docs/data-model.md`, `docs/schema.sql`) agree, and `docs/schema-tests.sql`
-passes 44 use-case checks on PostgreSQL 16.
+passes 46 use-case checks on PostgreSQL 16.
 
 Decided at kickoff:
 
@@ -49,7 +49,9 @@ discuss, then Claude writes the test file.
 - `docs/data-model.md`: the nine tables, which rules the database enforces and
   which the app must (the app list becomes Phase 2 tests).
 - `docs/schema.sql`, `docs/schema-tests.sql`: exact Postgres schema and its
-  use-case tests. Needs PostgreSQL 15+.
+  use-case tests. Needs PostgreSQL 15+. Local install:
+  Homebrew `postgresql@16`, keg-only, so binaries are in
+  `/opt/homebrew/opt/postgresql@16/bin`.
 - `docs/decisions/`: records 001–011. Latest: 011, the database enforces
   cross-table rules. 006 amended 2026-11-17 to add single progression.
 - `docs/later.md`: deferred features (offline sync, tags, timed progression,
@@ -59,5 +61,4 @@ discuss, then Claude writes the test file.
 
 ## Open items
 
-- `docs/schema-tests.sql` has two new single-progression checks (46 total)
-  that haven't been run yet: no local PostgreSQL. Run before Phase 4.
+- None blocking.
