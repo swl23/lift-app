@@ -67,7 +67,10 @@ Related records: 002, 003, 005, 006, 007, 008, 009, 010, 011.
    weight and reps of its most recent set in a submitted workout. An exercise
    with neither starts with empty values. Either way the increment defaults to
    5 lb, and the user can change everything before saving the program.
-9. Each track has a progression rule. v1 has two:
+9. Each track has a progression rule. v1 has three:
+   - **Single progression:** reps exercises with a fixed rep target and no
+     range. Hitting the target on all sets adds the track's weight increment
+     next time; the rep target stays the same.
    - **Double progression:** reps exercises with a rep range only. Every set
      uses the same weight and rep target, starting at the bottom of the range.
      Hitting the target on all sets adds 1 rep per set next time. Hitting the
@@ -144,7 +147,9 @@ Related records: 002, 003, 005, 006, 007, 008, 009, 010, 011.
     target again. A short message says which ("Nice, you did all your sets.
     Confirm progression for next time." or "You didn't complete all your sets.
     Try this again next time."), and any values that changed are briefly
-    highlighted. Timed and done exercises have no confirm screen in v1.
+    highlighted. Timed and done exercises have no confirm screen in v1. A set
+    hits its target when its reps and weight are at least the target; an empty
+    target (AMRAP or bodyweight) accepts any value.
 24. The confirm screen has a weight row and a reps row, each with − and +
     buttons, and an OK button. The user can change either value before tapping
     OK (see 009):

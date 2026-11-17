@@ -1,6 +1,6 @@
 # Status
 
-Last updated: 2026-11-16
+Last updated: 2026-11-17
 
 A short snapshot of where the project stands, so a new chat can pick up without
 rereading the whole repo. Claude updates this file as part of any commit that
@@ -12,7 +12,7 @@ Phase 2: Core logic (plain JS functions with tests). Started 2026-11-15.
 
 Phase 1 is done: requirements (`docs/requirements.md`) and data model
 (`docs/data-model.md`, `docs/schema.sql`) agree, and `docs/schema-tests.sql`
-passes 44 use-case checks on PostgreSQL 16.
+passes 46 use-case checks on PostgreSQL 16.
 
 Decided at kickoff:
 
@@ -30,7 +30,7 @@ Order:
 
 1. Setup (Claude): package.json, `src/core/`
 2. Next-day logic (007, 010): done
-3. Progression suggestion (006, 009)
+3. Progression suggestion (006, 009): done
 4. Confirm-screen rules (req 24–26)
 5. Workout lifecycle: start, resume, finish, discard, submit
 6. Guards and program edits (rest of data-model.md's app list)
@@ -38,9 +38,10 @@ Order:
 
 ## Next step
 
-Next-day logic is done: `src/core/nextDay.js` (`getSuggestedDay`,
-`getNextDayId`) passes `npm test`. Next, kick off the progression suggestion
-(006, 009): discuss, then Claude writes `src/core/progression.test.js`.
+Progression suggestion is done: `src/core/progression.js`
+(`suggestNextTarget`) passes `npm test`, including the new `single` rule
+(006 amendment). Next, kick off the confirm-screen rules (req 24–26):
+discuss, then Claude writes the test file.
 
 ## Where things are
 
@@ -48,9 +49,11 @@ Next-day logic is done: `src/core/nextDay.js` (`getSuggestedDay`,
 - `docs/data-model.md`: the nine tables, which rules the database enforces and
   which the app must (the app list becomes Phase 2 tests).
 - `docs/schema.sql`, `docs/schema-tests.sql`: exact Postgres schema and its
-  use-case tests. Needs PostgreSQL 15+.
+  use-case tests. Needs PostgreSQL 15+. Local install:
+  Homebrew `postgresql@16`, keg-only, so binaries are in
+  `/opt/homebrew/opt/postgresql@16/bin`.
 - `docs/decisions/`: records 001–011. Latest: 011, the database enforces
-  cross-table rules.
+  cross-table rules. 006 amended 2026-11-17 to add single progression.
 - `docs/later.md`: deferred features (offline sync, tags, timed progression,
   progress charts, TypeScript, hiding exercises).
 - `examples/current-program.md`: my 4-day split, used as example data only.
