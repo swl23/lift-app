@@ -5,7 +5,7 @@
  * Inputs are table rows, column names unchanged:
  *   track  { measurement_type, rule, rep_min, rep_max, target_reps,
  *            weight_lb, increment_lb }
- *          rule 'double' or 'none'; target_reps null = AMRAP;
+ *          rule 'single', 'double' or 'none'; target_reps null = AMRAP;
  *          weight_lb null = bodyweight
  *   slot   { set_count }
  *   sets   [{ set_number, reps, weight_lb, target_reps, target_weight_lb }]
@@ -24,6 +24,8 @@
  *
  *   next_reps, next_weight_lb (null = AMRAP / bodyweight, as in the table):
  *   - Not hit_all, or rule 'none': the track's current target again.
+ *   - 'single': weight + increment_lb, same target_reps. Ignores rep_min
+ *     and rep_max. Bodyweight counts as 0, so it becomes increment_lb.
  *   - 'double', target_reps below rep_max: one more rep, same weight.
  *   - 'double', target_reps at or above rep_max: weight + increment_lb, reps
  *     back to rep_min. Bodyweight counts as 0, so it becomes increment_lb.
@@ -46,32 +48,48 @@ import assert from "node:assert/strict";
 import { suggestNextTarget } from "./progression.js";
 
 // Incline press: 135 lb, 3 sets, range 6–10, currently 8 reps.
-const track = (overrides) => ({
-  measurement_type: "reps",
-  rule: "double",
-  rep_min: 6,
-  rep_max: 10,
-  target_reps: 8,
-  weight_lb: 135,
-  increment_lb: 5,
-  ...overrides,
-});
+// Pass an object to change some fields, e.g. track({ target_reps: 10 }).
+function track(overrides) {
+  const defaults = {
+    measurement_type: "reps",
+    rule: "double",
+    rep_min: 6,
+    rep_max: 10,
+    target_reps: 8,
+    weight_lb: 135,
+    increment_lb: 5,
+  };
+  // Copy the defaults, then the overrides on top. Later fields win.
+  return { ...defaults, ...overrides };
+}
 
-const slot = (set_count = 3) => ({ set_count });
+// A slot with 3 planned sets unless another count is given.
+function slot(set_count = 3) {
+  return { set_count: set_count };
+}
 
 // One logged set. Targets default to the track's, as when it was logged.
-const set = (set_number, reps, weight_lb, targets = {}) => ({
-  set_number,
-  reps,
-  weight_lb,
-  target_reps: 8,
-  target_weight_lb: 135,
-  ...targets,
-});
+// Pass targets to change them, e.g. set(1, 10, 135, { target_reps: 10 }).
+function set(set_number, reps, weight_lb, targets) {
+  const logged = {
+    set_number: set_number,
+    reps: reps,
+    weight_lb: weight_lb,
+    target_reps: 8,
+    target_weight_lb: 135,
+  };
+  return { ...logged, ...targets };
+}
 
 // n sets, all logged at the same values against the same targets.
-const sets = (n, reps, weight_lb, targets) =>
-  Array.from({ length: n }, (_, i) => set(i + 1, reps, weight_lb, targets));
+// sets(3, 8, 135) is [set(1, 8, 135), set(2, 8, 135), set(3, 8, 135)].
+function sets(n, reps, weight_lb, targets) {
+  const logged = [];
+  for (let setNumber = 1; setNumber <= n; setNumber++) {
+    logged.push(set(setNumber, reps, weight_lb, targets));
+  }
+  return logged;
+}
 
 describe("which measurement types get a suggestion", () => {
   test("returns null for a timed track", () => {
@@ -149,6 +167,84 @@ describe("judging whether every set hit", () => {
   test("set order does not matter", () => {
     const logged = [set(3, 8, 135), set(1, 8, 135), set(2, 8, 135)];
     assert.equal(suggestNextTarget(track(), slot(), logged).hit_all, true);
+  });
+});
+
+describe("single progression", () => {
+  // Squat: 225 lb, 3 sets of 5, weight goes up each time every set hits.
+  const fives = track({
+    rule: "single",
+    rep_min: null,
+    rep_max: null,
+    target_reps: 5,
+    weight_lb: 225,
+  });
+  const fivesTargets = { target_reps: 5, target_weight_lb: 225 };
+
+  test("adds the increment and keeps the same reps", () => {
+    const result = suggestNextTarget(
+      fives,
+      slot(),
+      sets(3, 5, 225, fivesTargets),
+    );
+    assert.deepEqual(result, {
+      hit_all: true,
+      next_reps: 5,
+      next_weight_lb: 230,
+    });
+  });
+
+  test("beating the rep target still keeps the same reps", () => {
+    const result = suggestNextTarget(
+      fives,
+      slot(),
+      sets(3, 7, 225, fivesTargets),
+    );
+    assert.equal(result.next_reps, 5);
+    assert.equal(result.next_weight_lb, 230);
+  });
+
+  test("a miss suggests the same target again", () => {
+    const logged = [
+      set(1, 5, 225, fivesTargets),
+      set(2, 5, 225, fivesTargets),
+      set(3, 4, 225, fivesTargets),
+    ];
+    assert.deepEqual(suggestNextTarget(fives, slot(), logged), {
+      hit_all: false,
+      next_reps: 5,
+      next_weight_lb: 225,
+    });
+  });
+
+  test("ignores a rep range if the track has one", () => {
+    // Shouldn't be saved this way, but single must not fall into double's
+    // add-a-rep logic if it is.
+    const ranged = { ...fives, rep_min: 5, rep_max: 8 };
+    const result = suggestNextTarget(
+      ranged,
+      slot(),
+      sets(3, 5, 225, fivesTargets),
+    );
+    assert.deepEqual(result, {
+      hit_all: true,
+      next_reps: 5,
+      next_weight_lb: 230,
+    });
+  });
+
+  test("a bodyweight lift at a hit adds the increment as weight", () => {
+    const bw = { target_reps: 5, target_weight_lb: null };
+    const result = suggestNextTarget(
+      { ...fives, weight_lb: null },
+      slot(),
+      sets(3, 5, null, bw),
+    );
+    assert.deepEqual(result, {
+      hit_all: true,
+      next_reps: 5,
+      next_weight_lb: 5,
+    });
   });
 });
 
