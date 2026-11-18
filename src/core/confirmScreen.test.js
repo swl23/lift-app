@@ -113,6 +113,10 @@ describe("stepWeight: down with a weight floor", () => {
     assert.equal(stepWeight(40, "down", BAR), 40);
   });
 
+  test("a small value below a raised floor doesn't jump up to it", () => {
+    assert.equal(stepWeight(2, "down", BAR), 2);
+  });
+
   test("a small floor works the same way", () => {
     // Dumbbell curl with a 2.5 lb floor: never Bodyweight.
     assert.equal(stepWeight(2.5, "down", 2.5), 2.5);
@@ -313,14 +317,14 @@ describe("exercisesToConfirm", () => {
   test("an empty workout has nothing to confirm", () => {
     assert.deepEqual(exercisesToConfirm(program, []), []);
   });
-});
 
-test("does not change its inputs", () => {
-  const list = [
-    { id: "b", position: 2, measurement_type: "reps", confirmed_at: null },
-    { id: "a", position: 1, measurement_type: "reps", confirmed_at: null },
-  ].map((e) => ({ ...e, set_count: 1, sets: [{}] }));
-  const before = structuredClone(list);
-  exercisesToConfirm({ kind: "program" }, list);
-  assert.deepEqual(list, before);
+  test("does not change its inputs", () => {
+    const list = [
+      { id: "b", position: 2, measurement_type: "reps", confirmed_at: null },
+      { id: "a", position: 1, measurement_type: "reps", confirmed_at: null },
+    ].map((e) => ({ ...e, set_count: 1, sets: [{}] }));
+    const before = structuredClone(list);
+    exercisesToConfirm({ kind: "program" }, list);
+    assert.deepEqual(list, before);
+  });
 });

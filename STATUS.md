@@ -19,8 +19,8 @@ Decided at kickoff:
 - Tests: Node's built-in `node:test`, no dependencies (`npm test`). Revisit
   Vitest when React arrives in Phase 3.
 - Node 24 (pin `engines` in package.json).
-- Workflow: Claude writes each test file, opening with a short spec comment;
-  I write the code until the tests pass; Claude reviews.
+- Workflow: Claude writes each test file, opening with a short spec comment; I
+  write the code until the tests pass; Claude reviews.
 - Code in `src/core/`, one module per topic, tests next to it as `*.test.js`
   (colocation). Feature folders get revisited at Phase 3 kickoff.
 - Function inputs use the table column names (`next_day_id`, `position`) so
@@ -31,18 +31,16 @@ Order:
 1. Setup (Claude): package.json, `src/core/`
 2. Next-day logic (007, 010): done
 3. Progression suggestion (006, 009): done
-4. Confirm-screen rules (req 24–26)
+4. Confirm-screen rules (req 24–26): done
 5. Workout lifecycle: start, resume, finish, discard, submit
 6. Guards and program edits (rest of data-model.md's app list)
 7. Checkpoint: review records and requirements, TypeScript question, README
 
 ## Next step
 
-Confirm-screen rules (req 24–26) are discussed and specced: 009 amended to add
-typed values and a per-exercise lowest weight, and Claude wrote
-`src/core/confirmScreen.test.js`. Next, I write `src/core/confirmScreen.js`
-(`stepWeight`, `stepReps`, `parseWeight`, `parseReps`, `exercisesToConfirm`)
-until `npm test` passes, then Claude reviews.
+Confirm-screen rules (req 24–26) are done: `src/core/confirmScreen.js` passes
+its tests. Next, discuss workout lifecycle (start, resume, finish, discard,
+submit) before Claude writes its tests.
 
 ## Where things are
 
@@ -50,9 +48,8 @@ until `npm test` passes, then Claude reviews.
 - `docs/data-model.md`: the nine tables, which rules the database enforces and
   which the app must (the app list becomes Phase 2 tests).
 - `docs/schema.sql`, `docs/schema-tests.sql`: exact Postgres schema and its
-  use-case tests. Needs PostgreSQL 15+. Local install:
-  Homebrew `postgresql@16`, keg-only, so binaries are in
-  `/opt/homebrew/opt/postgresql@16/bin`.
+  use-case tests. Needs PostgreSQL 15+. Local install: Homebrew `postgresql@16`,
+  keg-only, so binaries are in `/opt/homebrew/opt/postgresql@16/bin`.
 - `docs/decisions/`: records 001–011. Latest: 011, the database enforces
   cross-table rules. 006 amended 2026-11-17 to add single progression; 009
   amended 2026-11-17 to add typed values and lowest weight.
