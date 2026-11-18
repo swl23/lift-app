@@ -42,7 +42,9 @@ Related records: 002, 003, 005, 006, 007, 008, 009, 010, 011.
 ## Exercises
 
 1. The user creates an exercise by giving it a name and choosing a measurement
-   type.
+   type. A reps exercise also needs a lowest weight: Bodyweight, or a weight
+   such as the bar's. There's no default; the user picks one. Targets can't go
+   below it; logged sets can, so the log records what was actually done.
 2. The measurement type applies everywhere the exercise is used.
 3. The measurement type can't be changed once the exercise has any logged sets.
    To measure a movement another way, the user creates a new exercise.
@@ -54,8 +56,8 @@ Related records: 002, 003, 005, 006, 007, 008, 009, 010, 011.
 6. Every slot has a set count of at least 1, whatever its measurement type.
 7. Each slot sets its targets in its exercise's unit. Different programs can set
    different targets for the same exercise.
-   - Reps: a rep range or an open target (AMRAP), plus a starting weight or no
-     weight.
+   - Reps: a rep range or an open target (AMRAP), plus a starting weight, or no
+     weight if the exercise's lowest weight is Bodyweight.
    - Time: a target duration per set, or open-ended (go until failure).
    - Done: no target beyond the set count.
 8. Each slot gets its own track by default. The user can make slots in the same
@@ -153,10 +155,12 @@ Related records: 002, 003, 005, 006, 007, 008, 009, 010, 011.
 24. The confirm screen has a weight row and a reps row, each with − and +
     buttons, and an OK button. The user can change either value before tapping
     OK (see 009):
-    - Weight changes in 2.5 lb steps. − stops at 2.5 lb. On a bodyweight lift
-      the row shows "Bodyweight," + adds weight, and − below 2.5 lb returns to
-      Bodyweight. There's no upper limit.
-    - Reps change by 1, from 1 to 200, regardless of the rep range.
+    - Tapping either value lets the user type one. The buttons change it by
+      2.5 lb or 1 rep from whatever it is now.
+    - Weight can't go below the exercise's lowest weight (1). If that's
+      Bodyweight, the row shows "Bodyweight," + adds weight, and − from 2.5 lb
+      or less returns to Bodyweight. There's no upper limit.
+    - Reps go from 1 to 200, regardless of the rep range.
     - AMRAP lifts show only the weight row.
     - The set count isn't on this screen. It's changed in the program editor.
 25. Tapping OK saves the values with the open workout. They're written to the

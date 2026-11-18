@@ -20,9 +20,12 @@ create table exercises (
   name             text not null check (btrim(name) <> ''),
   measurement_type text not null
                    check (measurement_type in ('reps', 'time', 'done')),
+  -- floor for targets, not logged sets (009); empty = Bodyweight
+  lowest_weight_lb numeric(6, 2) check (lowest_weight_lb > 0),
   created_at       timestamptz not null default now(),
   unique (id, user_id),
-  unique (id, measurement_type)
+  unique (id, measurement_type),
+  check (measurement_type = 'reps' or lowest_weight_lb is null)
 );
 -- "Chest press" and "chest press " are the same exercise.
 create unique index exercises_name_per_user
@@ -141,7 +144,7 @@ create table workout_exercises (
   slot_id          uuid, -- empty for freeform, or after the slot is deleted
   position         integer not null check (position >= 1),
   next_reps        integer check (next_reps between 1 and 200),
-  next_weight_lb   numeric(6, 2) check (next_weight_lb >= 2.5),
+  next_weight_lb   numeric(6, 2) check (next_weight_lb > 0),
   confirmed_at     timestamptz,
   unique (id, user_id, measurement_type),
   unique (workout_id, position) deferrable initially deferred,

@@ -36,12 +36,13 @@ of a plan never deletes logged sets (010).
 
 A movement you define once and use in any program or freeform workout.
 
-| Column             | Notes                                        |
-| ------------------ | -------------------------------------------- |
-| `id`, `user_id`    |                                              |
-| `name`             | Unique per user, ignoring case and spaces    |
-| `measurement_type` | `reps`, `time` or `done`. Locked once logged |
-| `created_at`       |                                              |
+| Column             | Notes                                         |
+| ------------------ | --------------------------------------------- |
+| `id`, `user_id`    |                                               |
+| `name`             | Unique per user, ignoring case and spaces     |
+| `measurement_type` | `reps`, `time` or `done`. Locked once logged  |
+| `lowest_weight_lb` | Reps only. Targets' floor. Empty = Bodyweight |
+| `created_at`       |                                               |
 
 ### programs
 
@@ -115,17 +116,17 @@ after the day is deleted, history by program isn't kept (010).
 
 One exercise inside one workout.
 
-| Column             | Notes                                                   |
-| ------------------ | ------------------------------------------------------- |
-| `id`, `user_id`    |                                                         |
-| `workout_id`       |                                                         |
-| `exercise_id`      | Always filled. History is read by exercise (010)        |
-| `measurement_type` | Copy of the exercise's type. Locks it once logged       |
-| `slot_id`          | Empty for freeform, or after the slot is deleted        |
-| `position`         | Order within the workout, unique in the workout         |
-| `next_reps`        | Confirmed next reps, 1–200. Empty for AMRAP (009)       |
-| `next_weight_lb`   | Confirmed next weight, at least 2.5. Empty = bodyweight |
-| `confirmed_at`     | When OK was tapped. Empty = not confirmed yet           |
+| Column             | Notes                                              |
+| ------------------ | -------------------------------------------------- |
+| `id`, `user_id`    |                                                    |
+| `workout_id`       |                                                    |
+| `exercise_id`      | Always filled. History is read by exercise (010)   |
+| `measurement_type` | Copy of the exercise's type. Locks it once logged  |
+| `slot_id`          | Empty for freeform, or after the slot is deleted   |
+| `position`         | Order within the workout, unique in the workout    |
+| `next_reps`        | Confirmed next reps, 1–200. Empty for AMRAP (009)  |
+| `next_weight_lb`   | Confirmed next weight, above 0. Empty = bodyweight |
+| `confirmed_at`     | When OK was tapped. Empty = not confirmed yet      |
 
 When `slot_id` is filled, `exercise_id` must match the slot's exercise.
 
@@ -161,7 +162,7 @@ Each type has exactly its own columns filled: a reps set has `reps` and no
 - Duplicate exercise names, duplicate positions, duplicate set numbers.
 - Changing an exercise's measurement type once it's logged (req 3). Before that,
   its tracks follow the change.
-- Columns that don't fit the measurement type, on tracks and sets.
+- Columns that don't fit the measurement type, on exercises, tracks and sets.
 - Double progression without a rep range and target.
 - Single progression without a target, or with a rep range.
 - A freeform workout with a day; a submitted time on an open workout.
@@ -180,6 +181,12 @@ Each type has exactly its own columns filled: a reps set has `reps` and no
 - Picking a new active program when the active one is deleted.
 - Copying confirmed targets to tracks only on submit, and only for `program`
   workouts (req 25, 27).
+- Keeping targets at or above their exercise's lowest weight, and allowing a
+  bodyweight target only when the lowest weight is Bodyweight (req 1, 24).
+  Logged sets aren't limited (009).
+- Requiring a lowest weight choice when a reps exercise is created (req 1).
+  Empty is a valid choice (Bodyweight), so the database can't tell it from "not
+  chosen".
 
 ## What deleting does
 
