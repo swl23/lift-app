@@ -42,3 +42,11 @@ An exercise with logged sets can't be deleted, so its history keeps its name.
 Over time the exercise list could fill with movements no longer used. A "hide"
 option would keep the history but drop the exercise from pickers. It would also
 free its name for reuse.
+
+## Adding an exercise to a program workout
+
+Someone's on the machine you need, so you swap in a different exercise
+mid-workout. In v1, a program or off-program-day workout logs only the day's
+slots; going off-plan means a freeform workout. Open questions for later:
+whether the extra exercise shows up in that day's history, and whether it could
+ever move a track.

@@ -38,28 +38,23 @@ Order:
 
 ## Next step
 
-Step 5, workout lifecycle, is in discussion (started 2026-11-17). Next, I answer
-the open questions below. Then Claude records any decisions and writes
-`src/core/workout.test.js`.
+Step 5, workout lifecycle: questions answered 2026-11-17, and Claude has written
+`src/core/workout.test.js`. Next, I write `src/core/workout.js` until the tests
+pass.
 
-Already settled by requirements, so not up for discussion: a workout starts at
-its first logged set (13); submit moves next day and copies confirmed targets to
-tracks only for program workouts (16, 25, 27); confirm screens come first on
-Resume and Finish (26, done in step 4).
+Settled by requirements: a workout starts at its first logged set (13); submit
+moves next day and copies confirmed targets to tracks only for program workouts
+(16, 25, 27); confirm screens come first on Resume and Finish (26).
 
-Open questions (Claude's recommendation in brackets):
+Answered 2026-11-17 (requirements 15 and 17 updated to match):
 
-1. Resume, partial exercise: I did 2 of 3 bench sets and closed the app. Does
-   Resume land on bench, or the next untouched exercise? [Bench: the first
-   exercise, by position, with fewer sets logged than planned.]
-2. Resume, freeform: there's no plan. Where does it land? [The last exercise I
-   logged a set for.]
-3. Finish message: bench has 2 of 3 sets and rows has 0 of 3. Does "N exercises
-   not logged" say 1 or 2? [2: any exercise missing a planned set counts.]
-4. Discard: it deletes every logged set. Ask "Are you sure?" first? [Yes, with
-   the set count, e.g. "Delete this workout and its 9 sets?"]
-5. Machine taken mid-workout: can I add an exercise that isn't on the day to a
-   program workout? [Not in v1; add it to `docs/later.md`.]
+1. Resume lands on the first exercise, by position, with fewer sets logged than
+   planned ("unfinished").
+2. Resume in a freeform workout lands on the last exercise with a logged set.
+3. Finish says "End workout? N exercises unfinished", counting every exercise
+   missing a planned set, partly logged or not at all.
+4. Discard asks first, with the set count: "Delete this workout and its 9 sets?"
+5. No adding an off-plan exercise to a program workout in v1 (`docs/later.md`).
 
 ## Where things are
 
@@ -73,7 +68,8 @@ Open questions (Claude's recommendation in brackets):
   cross-table rules. 006 amended 2026-11-17 to add single progression; 009
   amended 2026-11-17 to add typed values and lowest weight.
 - `docs/later.md`: deferred features (offline sync, tags, timed progression,
-  progress charts, TypeScript, hiding exercises).
+  progress charts, TypeScript, hiding exercises, adding an exercise to a program
+  workout).
 - `examples/current-program.md`: my 4-day split, used as example data only.
 - The "Lift App Data Model" artifact is the interactive ERD.
 
