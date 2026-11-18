@@ -38,9 +38,28 @@ Order:
 
 ## Next step
 
-Confirm-screen rules (req 24–26) are done: `src/core/confirmScreen.js` passes
-its tests. Next, discuss workout lifecycle (start, resume, finish, discard,
-submit) before Claude writes its tests.
+Step 5, workout lifecycle, is in discussion (started 2026-11-17). Next, I answer
+the open questions below. Then Claude records any decisions and writes
+`src/core/workout.test.js`.
+
+Already settled by requirements, so not up for discussion: a workout starts at
+its first logged set (13); submit moves next day and copies confirmed targets to
+tracks only for program workouts (16, 25, 27); confirm screens come first on
+Resume and Finish (26, done in step 4).
+
+Open questions (Claude's recommendation in brackets):
+
+1. Resume, partial exercise: I did 2 of 3 bench sets and closed the app. Does
+   Resume land on bench, or the next untouched exercise? [Bench: the first
+   exercise, by position, with fewer sets logged than planned.]
+2. Resume, freeform: there's no plan. Where does it land? [The last exercise I
+   logged a set for.]
+3. Finish message: bench has 2 of 3 sets and rows has 0 of 3. Does "N exercises
+   not logged" say 1 or 2? [2: any exercise missing a planned set counts.]
+4. Discard: it deletes every logged set. Ask "Are you sure?" first? [Yes, with
+   the set count, e.g. "Delete this workout and its 9 sets?"]
+5. Machine taken mid-workout: can I add an exercise that isn't on the day to a
+   program workout? [Not in v1; add it to `docs/later.md`.]
 
 ## Where things are
 
