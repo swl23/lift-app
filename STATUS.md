@@ -1,6 +1,6 @@
 # Status
 
-Last updated: 2026-11-17
+Last updated: 2026-11-18
 
 A short snapshot of where the project stands, so a new chat can pick up without
 rereading the whole repo. Claude updates this file as part of any commit that
@@ -32,29 +32,22 @@ Order:
 2. Next-day logic (007, 010): done
 3. Progression suggestion (006, 009): done
 4. Confirm-screen rules (req 24–26): done
-5. Workout lifecycle: start, resume, finish, discard, submit
+5. Workout lifecycle: start, resume, finish, discard, submit: done
 6. Guards and program edits (rest of data-model.md's app list)
 7. Checkpoint: review records and requirements, TypeScript question, README
 
 ## Next step
 
-Step 5, workout lifecycle: questions answered 2026-11-17, and Claude has written
-`src/core/workout.test.js`. Next, I write `src/core/workout.js` until the tests
-pass.
+Step 6, guards and program edits: the rest of data-model.md's app list. Start by
+discussing questions, then Claude writes the test file.
 
-Settled by requirements: a workout starts at its first logged set (13); submit
-moves next day and copies confirmed targets to tracks only for program workouts
-(16, 25, 27); confirm screens come first on Resume and Finish (26).
+Question to settle first: can a slot be deleted while a workout using it is
+open? `submitWorkout` handles it either way (an exercise with no slot never
+blocks submitting), but it affects what the user sees mid-workout.
 
-Answered 2026-11-17 (requirements 15 and 17 updated to match):
-
-1. Resume lands on the first exercise, by position, with fewer sets logged than
-   planned ("unfinished").
-2. Resume in a freeform workout lands on the last exercise with a logged set.
-3. Finish says "End workout? N exercises unfinished", counting every exercise
-   missing a planned set, partly logged or not at all.
-4. Discard asks first, with the set count: "Delete this workout and its 9 sets?"
-5. No adding an off-plan exercise to a program workout in v1 (`docs/later.md`).
+Step 5 done 2026-11-18: `src/core/workout.js` passes 146 tests. Submit uses
+`exercisesToConfirm` directly, so the confirm rule lives only in
+`confirmScreen.js`.
 
 ## Where things are
 
