@@ -104,18 +104,22 @@ Related records: 002, 003, 005, 006, 007, 008, 009, 010, 011.
 15. The user ends a workout with "Finish workout." For every kind of workout,
     the app first shows a screen asking the user to confirm, then submits. If
     any planned sets are unlogged, that screen also says so ("End workout? N
-    exercises not logged"). Unlogged sets count as skipped, and missed reps and
-    missed sets still count.
+    exercises unfinished"). An exercise is unfinished when it has fewer sets
+    logged than planned, including none. Unlogged sets count as skipped, and
+    missed reps and missed sets still count.
 16. Submitting a workout from the active program moves that program's next day
     forward.
 17. There's no pause or save button. Logged sets are already saved (22), so
     leaving the app in any way leaves the workout open. The next time the user
     opens the app, it offers, for any kind of workout and however long it's
     been:
-    - **Resume:** pick up at the first unlogged exercise.
+    - **Resume:** pick up at the first unfinished exercise (15). A freeform
+      workout has no plan, so it picks up at the last exercise with a logged
+      set.
     - **Finish:** submit the workout, as in 15.
-    - **Discard:** delete the workout and all its logs. The next day doesn't
-      change, so the same day is suggested again.
+    - **Discard:** after the user confirms ("Delete this workout and its N
+      sets?"), delete the workout and all its logs. The next day doesn't change,
+      so the same day is suggested again.
 18. If a workout is open and the user picks a different day, changes the active
     program, starts an off-program workout, or edits a program, the app first
     asks the user to finish or discard the open workout.

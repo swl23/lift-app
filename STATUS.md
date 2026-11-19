@@ -1,6 +1,6 @@
 # Status
 
-Last updated: 2026-11-17
+Last updated: 2026-11-18
 
 A short snapshot of where the project stands, so a new chat can pick up without
 rereading the whole repo. Claude updates this file as part of any commit that
@@ -32,34 +32,22 @@ Order:
 2. Next-day logic (007, 010): done
 3. Progression suggestion (006, 009): done
 4. Confirm-screen rules (req 24–26): done
-5. Workout lifecycle: start, resume, finish, discard, submit
+5. Workout lifecycle: start, resume, finish, discard, submit: done
 6. Guards and program edits (rest of data-model.md's app list)
 7. Checkpoint: review records and requirements, TypeScript question, README
 
 ## Next step
 
-Step 5, workout lifecycle, is in discussion (started 2026-11-17). Next, I answer
-the open questions below. Then Claude records any decisions and writes
-`src/core/workout.test.js`.
+Step 6, guards and program edits: the rest of data-model.md's app list. Start by
+discussing questions, then Claude writes the test file.
 
-Already settled by requirements, so not up for discussion: a workout starts at
-its first logged set (13); submit moves next day and copies confirmed targets to
-tracks only for program workouts (16, 25, 27); confirm screens come first on
-Resume and Finish (26, done in step 4).
+Question to settle first: can a slot be deleted while a workout using it is
+open? `submitWorkout` handles it either way (an exercise with no slot never
+blocks submitting), but it affects what the user sees mid-workout.
 
-Open questions (Claude's recommendation in brackets):
-
-1. Resume, partial exercise: I did 2 of 3 bench sets and closed the app. Does
-   Resume land on bench, or the next untouched exercise? [Bench: the first
-   exercise, by position, with fewer sets logged than planned.]
-2. Resume, freeform: there's no plan. Where does it land? [The last exercise I
-   logged a set for.]
-3. Finish message: bench has 2 of 3 sets and rows has 0 of 3. Does "N exercises
-   not logged" say 1 or 2? [2: any exercise missing a planned set counts.]
-4. Discard: it deletes every logged set. Ask "Are you sure?" first? [Yes, with
-   the set count, e.g. "Delete this workout and its 9 sets?"]
-5. Machine taken mid-workout: can I add an exercise that isn't on the day to a
-   program workout? [Not in v1; add it to `docs/later.md`.]
+Step 5 done 2026-11-18: `src/core/workout.js` passes 146 tests. Submit uses
+`exercisesToConfirm` directly, so the confirm rule lives only in
+`confirmScreen.js`.
 
 ## Where things are
 
@@ -73,7 +61,8 @@ Open questions (Claude's recommendation in brackets):
   cross-table rules. 006 amended 2026-11-17 to add single progression; 009
   amended 2026-11-17 to add typed values and lowest weight.
 - `docs/later.md`: deferred features (offline sync, tags, timed progression,
-  progress charts, TypeScript, hiding exercises).
+  progress charts, TypeScript, hiding exercises, adding an exercise to a program
+  workout).
 - `examples/current-program.md`: my 4-day split, used as example data only.
 - The "Lift App Data Model" artifact is the interactive ERD.
 
